@@ -1,0 +1,14 @@
+body {
+  width: 450px;
+  height: 800px;
+  margin: 0;
+}
+
+.canvas {
+  box-sizing: border-box;
+  width: 450px;
+  height: 800px;
+  padding: 0;
+
+  background-color: black;
+}
