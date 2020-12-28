@@ -10,5 +10,8 @@ body {
   height: 800px;
   padding: 0;
 
-  background-color: black;
+  background-color: grey;
+  background-image: url("../img/fieldGrid.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
 }

@@ -5,10 +5,16 @@ const context = canvas.getContext('2d');
 const fieldWidth = 450;
 const fieldHeight = 800;
 
+const racketImgBottom = new Image();
+racketImgBottom.src = 'img/racketBottom.svg';
+
+const racketImgTop = new Image();
+racketImgTop.src = 'img/racketTop.svg';
+
 const ball = {
   radius: 10,
-  x: fieldWidth / 2 - 5,
-  y: fieldHeight / 2 - 5,
+  x: fieldWidth / 2,
+  y: fieldHeight / 2,
   speedX: 0,
   speedY: 5,
 
@@ -20,24 +26,41 @@ const ball = {
   draw: function () {
     context.beginPath();
     context.arc(ball.x, ball.y, ball.radius, 0, 2 * Math.PI, false);
-    context.fillStyle = 'white';
+    context.fillStyle = '#ff5b00';
     context.fill();
   },
 
+  setSpeedY: function (time) {
+    setInterval(() => {
+      if (this.speedY > 0 && this.speedY < 10) {
+        this.speedY += 0.5;
+      } else if (this.speedY < 0 && this.speedY > -10) {
+        this.speedY -= 0.5;
+      }
+    }, time * 1000);
+  },
+
   checkCollision: function (racketTop, racketBottom) {
-    console.log(this.y - racketTop.height - racketTop.y);
     if (this.x > fieldWidth - this.radius || this.x < this.radius) {
       this.speedX *= -1;
     }
 
     if (this.y - this.radius > fieldHeight || this.y + this.radius < 0) {
-      this.x = fieldWidth / 2 - 5;
-      this.y = fieldHeight / 2 - 5;
+      if (this.y - this.radius > fieldHeight) {
+        racketTop.score++;
+      } else {
+        racketBottom.score++;
+      }
+      racketTop.x = fieldWidth / 2 - 50;
+      racketBottom.x = fieldWidth / 2 - 50;
+      this.x = fieldWidth / 2;
+      this.y = fieldHeight / 2;
       this.speedX = 0;
       // this.speedY = -1;
     }
 
-    if ((this.y - racketTop.height - racketTop.y <= 0 && this.y - racketTop.height - racketTop.y >= -10) && this.x > racketTop.x && this.x < racketTop.x + racketTop.width) {
+    if ((this.y - racketTop.height - racketTop.y <= 0 && this.y - racketTop.height - racketTop.y >= -10) &&
+      this.x > racketTop.x && this.x < racketTop.x + racketTop.width) {
       if (this.x - racketTop.x <= 55 && this.x - racketTop.x >= 45) {
         this.speedX = 0;
       } else if (this.x - racketTop.x >= 80) {
@@ -56,7 +79,8 @@ const ball = {
       this.speedY *= -1;
     }
 
-    if ((this.y - racketBottom.y >= 0 && this.y - racketBottom.y <= 10) && this.x > racketBottom.x && this.x < racketBottom.x + racketBottom.width) {
+    if ((this.y - racketBottom.y >= 0 && this.y - racketBottom.y <= 10) &&
+      this.x > racketBottom.x && this.x < racketBottom.x + racketBottom.width) {
       if (this.x - racketBottom.x <= 55 && this.x - racketBottom.x >= 45) {
         this.speedX = 0;
       } else if (this.x - racketBottom.x >= 80) {
@@ -83,21 +107,29 @@ class Rackets {
     this.y = y;
     this.width = width;
     this.height = height;
+    this.score = 0;
   }
 
-  draw() {
-    context.beginPath();
-    context.rect(this.x, this.y, this.width, this.height);
-    context.fillStyle = 'white';
-    context.fill();
+  draw(racket) {
+    context.drawImage(racket, this.x, this.y, 100, 20);
+  }
+
+  drawScore() {
+    context.fillStyle='white';
+    if (this. y < 100) {
+      context.fillText(`:${this.score}`, 70, 50);
+    } else {
+      context.fillText(`:${this.score}`, 70, 770);
+    }
+    context.font='30px sans-serif';
   }
 
   move(left, right) {
     if (left) {
-      this.x -= 3;
+      this.x -= 5;
     }
     if (right) {
-      this.x += 3;
+      this.x += 5;
     }
     if (this.x <= 0) {
       this.x = 0;
@@ -108,8 +140,8 @@ class Rackets {
   }
 }
 
-const racketTop = new Rackets(fieldWidth / 2 - 55, 80, 100, 10);
-const racketBottom = new Rackets(fieldWidth / 2 - 55, 700, 100, 10);
+const racketTop = new Rackets(fieldWidth / 2 - 50, 85, 100, 15);
+const racketBottom = new Rackets(fieldWidth / 2 - 50, 700, 100, 15);
 
 let leftRacketBottom = false;
 let rightRacketBottom = false;
@@ -157,11 +189,15 @@ function render() {
   ball.checkCollision(racketTop, racketBottom);
   ball.draw();
   ball.move();
-  racketTop.draw();
-  racketBottom.draw();
+  racketTop.drawScore();
+  racketBottom.drawScore();
+  racketTop.draw(racketImgTop);
+  racketBottom.draw(racketImgBottom);
   racketTop.move(leftRacketTop, rightRacketTop);
   racketBottom.move(leftRacketBottom, rightRacketBottom);
   requestAnimationFrame(render);
 }
+
+ball.setSpeedY(5);
 
 render();
