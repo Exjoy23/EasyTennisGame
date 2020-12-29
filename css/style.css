@@ -1,13 +1,15 @@
 body {
-  width: 450px;
-  height: 800px;
   margin: 0;
+
+  background-color: lightgray;
 }
 
 .canvas {
+  display: block;
   box-sizing: border-box;
   width: 450px;
   height: 800px;
+  margin: 0 auto;
   padding: 0;
 
   background-color: grey;
