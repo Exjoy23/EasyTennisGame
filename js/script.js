@@ -16,7 +16,7 @@ const ball = {
   x: fieldWidth / 2,
   y: fieldHeight / 2,
   speedX: 0,
-  speedY: 10,
+  speedY: 12,
   timer: 5,
 
   setTimer() {
@@ -30,39 +30,50 @@ const ball = {
       this.speedX = 0;
       this.speedY = 0;
       this.timer = 0;
+      this.x = fieldWidth / 2;
+      this.y = fieldHeight / 2;
     }
   },
 
   drawTimer() {
     context.fillStyle = 'rgba(255, 255, 255, 0.5)';
-    context.fillText(this.timer, 330, 50);
-    context.fillText(this.timer, 330, 770);
     context.font = '30px sans-serif';
+    if (this.timer >= 100) {
+      context.fillText(this.timer, 330, 50);
+      context.fillText(this.timer, 330, 770);
+    } else if (this.timer < 10) {
+      context.fillText(this.timer, 360, 50);
+      context.fillText(this.timer, 360, 770);
+    } else if (this.timer < 100) {
+      context.fillText(this.timer, 345, 50);
+      context.fillText(this.timer, 345, 770);
+    }
   },
 
-  move: function () {
+  move() {
     this.x += this.speedX;
     this.y += this.speedY;
   },
 
-  draw: function () {
+  draw() {
     context.beginPath();
     context.arc(ball.x, ball.y, ball.radius, 0, 2 * Math.PI, false);
     context.fillStyle = '#ff5b00';
     context.fill();
   },
 
-  setSpeedY: function (time) {
-    setInterval(() => {
-      if (this.speedY > 0 && this.speedY < 10) {
-        this.speedY += 0.5;
-      } else if (this.speedY < 0 && this.speedY > -10) {
-        this.speedY -= 0.5;
-      }
-    }, time * 1000);
+  setSpeedY() {
+    switch (this.speedY) {
+      case 12:
+        this.speedY = 10;
+        break;
+      case -12:
+        this.speedY = -10;
+        break;
+    }
   },
 
-  setScore: function (racketTop, racketBottom) {
+  setScore(racketTop, racketBottom) {
     if (this.y - this.radius > fieldHeight || this.y + this.radius < 0) {
       if (this.y - this.radius > fieldHeight) {
         racketTop.score++;
@@ -79,7 +90,7 @@ const ball = {
     }
   },
 
-  checkCollisionWithRacket: function (racket) {
+  checkCollisionWithRacket(racket) {
     if (this.x - racket.x <= 55 && this.x - racket.x >= 45) {
       this.speedX = 0;
     } else if (this.x - racket.x >= 90) {
@@ -105,52 +116,62 @@ const ball = {
     }
   },
 
-  checkCollision: function (racketTop, racketBottom) {
+  checkCollision(racketTop, racketBottom) {
     if (this.x > fieldWidth - this.radius || this.x < this.radius) {
       switch (this.speedX) {
         case 6:
-          this.speedX = -6;
+          this.speedX = -4.5;
+          this.setSpeedY();
           break;
         case 5:
-          this.speedX = -5;
+          this.speedX = -3.5;
+          this.setSpeedY();
           break;
         case 4:
-          this.speedX = -4;
+          this.speedX = -2.5;
+          this.setSpeedY();
           break;
         case 3:
-          this.speedX = -3;
+          this.speedX = -1.5;
+          this.setSpeedY();
           break;
         case 1:
           this.speedX = -1;
+          this.setSpeedY();
           break;
         case -6:
-          this.speedX = 6;
+          this.speedX = 4.5;
+          this.setSpeedY();
           break;
         case -5:
-          this.speedX = 5;
+          this.speedX = 3.5;
+          this.setSpeedY();
           break;
         case -4:
-          this.speedX = 4;
+          this.speedX = 2.5;
+          this.setSpeedY();
           break;
         case -3:
-          this.speedX = 3;
+          this.speedX = 1.5;
+          this.setSpeedY();
           break;
         case -1:
           this.speedX = 1;
+          this.setSpeedY();
           break;
       }
     }
 
-    if ((this.y - racketTop.height - racketTop.y <= 0 && this.y - racketTop.height - racketTop.y >= -10) &&
+    if ((this.y - racketTop.height - racketTop.y <= 0 && this.y - racketTop.height - racketTop.y >= -30) &&
       this.x > racketTop.x && this.x < racketTop.x + racketTop.width) {
       this.checkCollisionWithRacket(racketTop);
-      this.speedY = 10;
+      this.speedY = 12;
     }
 
     if ((this.y - racketBottom.y - racketBottom.height / 5 >= 0 && this.y - racketBottom.y - racketBottom.height / 5 <= 30) &&
       this.x > racketBottom.x && this.x < racketBottom.x + racketBottom.width) {
       this.checkCollisionWithRacket(racketBottom);
-      this.speedY = -10;
+      this.speedY = -12;
     }
   }
 };
@@ -299,6 +320,24 @@ document.addEventListener('keyup', evt => {
   }
 });
 
+function drawResult() {
+  if (ball.timer === 0) {
+    if (racketTop.score === racketBottom.score) {
+      context.fillStyle = '#DA5858';
+      context.font = '60px sans-serif';
+      context.fillText('Nobody Won', 50, 405);
+    } else if (racketTop.score > racketBottom.score) {
+      context.fillStyle = 'white';
+      context.font = '65px sans-serif';
+      context.fillText('the Winner', 65, 110);
+    } else {
+      context.fillStyle = 'white';
+      context.font = '65px sans-serif';
+      context.fillText('the Winner', 65, 730);
+    }
+  }
+}
+
 function render() {
   context.clearRect(0, 0, fieldWidth, fieldHeight);
   ball.checkTimer();
@@ -309,15 +348,16 @@ function render() {
   checkCollisionWithField(racketTop, racketBottom);
   ball.drawTimer();
   racketTop.drawScore();
+  racketBottom.drawScore();
+  drawResult();
   racketTop.draw(racketImgTop);
   racketTop.move(leftRacketTop, rightRacketTop, upRacketTop, downRacketTop);
-  racketBottom.drawScore();
   racketBottom.draw(racketImgBottom);
   racketBottom.move(leftRacketBottom, rightRacketBottom, upRacketBottom, downRacketBottom);
+
   requestAnimationFrame(render);
 }
 
-// ball.setSpeedY(5);
 ball.setTimer();
 
 render();
