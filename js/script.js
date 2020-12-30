@@ -11,13 +11,22 @@ racketImgBottom.src = 'img/racketBottom.svg';
 const racketImgTop = new Image();
 racketImgTop.src = 'img/racketTop.svg';
 
+const racketTopSound = new Audio();
+racketTopSound.src = 'audio/racketTopSound.mp3';
+
+const racketBottomSound = new Audio();
+racketBottomSound.src = 'audio/racketBottomSound.mp3';
+
+const ballSound = new Audio();
+ballSound.src = 'audio/ballSound.mp3';
+
 const ball = {
   radius: 10,
   x: fieldWidth / 2,
   y: fieldHeight / 2,
   speedX: 0,
   speedY: 12,
-  timer: 5,
+  timer: 0,
 
   setTimer() {
     setInterval(() => {
@@ -118,6 +127,7 @@ const ball = {
 
   checkCollision(racketTop, racketBottom) {
     if (this.x > fieldWidth - this.radius || this.x < this.radius) {
+      ballSound.play();
       switch (this.speedX) {
         case 6:
           this.speedX = -4.5;
@@ -166,12 +176,14 @@ const ball = {
       this.x > racketTop.x && this.x < racketTop.x + racketTop.width) {
       this.checkCollisionWithRacket(racketTop);
       this.speedY = 12;
+      racketTopSound.play();
     }
 
     if ((this.y - racketBottom.y - racketBottom.height / 5 >= 0 && this.y - racketBottom.y - racketBottom.height / 5 <= 30) &&
       this.x > racketBottom.x && this.x < racketBottom.x + racketBottom.width) {
       this.checkCollisionWithRacket(racketBottom);
       this.speedY = -12;
+      racketBottomSound.play();
     }
   }
 };
@@ -327,11 +339,11 @@ function drawResult() {
       context.font = '60px sans-serif';
       context.fillText('Nobody Won', 50, 405);
     } else if (racketTop.score > racketBottom.score) {
-      context.fillStyle = 'white';
+      context.fillStyle = 'rgba(255, 255, 255, 0.5)';
       context.font = '65px sans-serif';
       context.fillText('the Winner', 65, 110);
     } else {
-      context.fillStyle = 'white';
+      context.fillStyle = 'rgba(255, 255, 255, 0.5)';
       context.font = '65px sans-serif';
       context.fillText('the Winner', 65, 730);
     }
@@ -343,7 +355,6 @@ function render() {
   ball.checkTimer();
   ball.checkCollision(racketTop, racketBottom);
   ball.setScore(racketTop, racketBottom);
-  ball.draw();
   ball.move();
   checkCollisionWithField(racketTop, racketBottom);
   ball.drawTimer();
@@ -354,7 +365,7 @@ function render() {
   racketTop.move(leftRacketTop, rightRacketTop, upRacketTop, downRacketTop);
   racketBottom.draw(racketImgBottom);
   racketBottom.move(leftRacketBottom, rightRacketBottom, upRacketBottom, downRacketBottom);
-
+  ball.draw();
   requestAnimationFrame(render);
 }
 
