@@ -4,6 +4,8 @@
   height: 100vh;
   margin: 0;
 
+  font-family: "Anton", sans-serif;
+
   background-color: lightgray;
 }
 
@@ -13,6 +15,10 @@
   right: 0;
   bottom: 0;
   left: 0;
+
+  display: flex;
+  justify-content: center;
+  padding-top: 300px;
 
   background-color: rgba(255, 255, 255, 0.5);
 }
@@ -31,11 +37,34 @@
   background-size: cover;
 }
 
-.menu__button {
-  width: 200;
+.button {
+  width: 300px;
+  height: 50px;
 
+  font-size: 30px;
+  font-family: "Anton", sans-serif;
   text-align: center;
   color: white;
+  text-transform: uppercase;
+  letter-spacing: 5px;
 
   background-color: black;
+  border: 3px solid white;
+  box-shadow: 12px 12px 6px 0 rgba(0, 0, 0, 0.2);
+}
+
+.button--hide {
+  display: none;
+}
+
+.button--replay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  transform: translateX(-50%);
+}
+
+.menu--hide {
+  display: none;
 }

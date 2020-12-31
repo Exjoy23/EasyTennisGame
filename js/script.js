@@ -39,14 +39,15 @@ const ball = {
       this.speedX = 0;
       this.speedY = 0;
       this.timer = 0;
-      this.x = fieldWidth / 2;
+      this.x = 435;
       this.y = fieldHeight / 2;
+      replayButton.classList.remove('button--hide');
     }
   },
 
   drawTimer() {
     context.fillStyle = 'rgba(255, 255, 255, 0.5)';
-    context.font = '30px sans-serif';
+    context.font = '30px Anton';
     if (this.timer >= 100) {
       context.fillText(this.timer, 330, 50);
       context.fillText(this.timer, 330, 770);
@@ -204,11 +205,11 @@ class Rackets {
   drawScore() {
     context.fillStyle = 'rgba(255, 255, 255, 0.5)';
     if (this.y < 400) {
-      context.fillText(`:${this.score}`, 70, 50);
+      context.fillText(`: ${this.score}`, 70, 50);
     } else {
-      context.fillText(`:${this.score}`, 70, 770);
+      context.fillText(`: ${this.score}`, 70, 770);
     }
-    context.font = '30px sans-serif';
+    context.font = '30px Anton';
   }
 
   move(left, right, up, bottom) {
@@ -336,16 +337,16 @@ function drawResult() {
   if (ball.timer === 0) {
     if (racketTop.score === racketBottom.score) {
       context.fillStyle = '#DA5858';
-      context.font = '60px sans-serif';
-      context.fillText('Nobody Won', 50, 405);
+      context.font = '60px Anton';
+      context.fillText('NOBODY WON', 75, 415);
     } else if (racketTop.score > racketBottom.score) {
       context.fillStyle = 'rgba(255, 255, 255, 0.5)';
-      context.font = '65px sans-serif';
-      context.fillText('the Winner', 65, 110);
+      context.font = '65px Anton';
+      context.fillText('THE WINNER', 80, 120);
     } else {
       context.fillStyle = 'rgba(255, 255, 255, 0.5)';
-      context.font = '65px sans-serif';
-      context.fillText('the Winner', 65, 730);
+      context.font = '65px Anton';
+      context.fillText('THE WINNER', 80, 730);
     }
   }
 }
@@ -371,4 +372,25 @@ function render() {
 
 ball.setTimer();
 
-render();
+const menu = document.querySelector('.menu');
+const playButton = menu.querySelector('.button--play');
+const replayButton = document.querySelector('.button--replay');
+
+playButton.addEventListener('click', () => {
+  menu.classList.add('menu--hide');
+  ball.timer = 180;
+  render();
+});
+
+replayButton.addEventListener('click', () => {
+  replayButton.classList.add('button--hide');
+  ball.timer = 180;
+  ball.x = fieldWidth / 2;
+  ball.y = fieldHeight / 2;
+  ball.speedX = 0;
+  ball.speedY = 12;
+  racketTop.x = fieldWidth / 2 - 50;
+  racketTop.y = fieldHeight / 2 - (fieldHeight / 2) + 50;
+  racketBottom.x = fieldWidth / 2 - 50;
+  racketBottom.y = fieldHeight / 2 + (fieldHeight / 2) - 100;
+});
