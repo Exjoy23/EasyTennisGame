@@ -3,7 +3,7 @@
 const canvas = document.querySelector('.canvas');
 const context = canvas.getContext('2d');
 const fieldWidth = 375;
-const fieldHeight = 647;
+const fieldHeight = 627;
 
 const racketImgBottom = new Image();
 racketImgBottom.src = 'img/racketBottom.svg';
