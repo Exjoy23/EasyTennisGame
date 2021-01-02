@@ -401,57 +401,110 @@ replayButton.addEventListener('click', () => {
 });
 
 document.addEventListener('touchstart', (evt) => {
-  if (evt.target.classList.contains('control__button--up')) {
+  if (evt.target.classList.contains('control__button--bottom-up')) {
     upRacketBottom = true;
   }
 
-  if (evt.target.classList.contains('control__button--down')) {
+  if (evt.target.classList.contains('control__button--bottom-down')) {
     downRacketBottom = true;
   }
 
-  if (evt.target.classList.contains('control__button--left')) {
+  if (evt.target.classList.contains('control__button--bottom-left')) {
     leftRacketBottom = true;
   }
 
-  if (evt.target.classList.contains('control__button--left-up')) {
+  if (evt.target.classList.contains('control__button--bottom-left-up')) {
     upRacketBottom = true;
     leftRacketBottom = true;
   }
 
-  if (evt.target.classList.contains('control__button--right')) {
+  if (evt.target.classList.contains('control__button--bottom-right')) {
     rightRacketBottom = true;
   }
 
-  if (evt.target.classList.contains('control__button--right-up')) {
+  if (evt.target.classList.contains('control__button--bottom-right-up')) {
     upRacketBottom = true;
     rightRacketBottom = true;
+  }
+
+  if (evt.target.classList.contains('control__button--top-up')) {
+    downRacketTop = true;
+  }
+
+  if (evt.target.classList.contains('control__button--top-down')) {
+    upRacketTop = true;
+  }
+
+  if (evt.target.classList.contains('control__button--top-left')) {
+    rightRacketTop = true;
+  }
+
+  if (evt.target.classList.contains('control__button--top-left-up')) {
+    downRacketTop = true;
+    rightRacketTop = true;
+  }
+
+  if (evt.target.classList.contains('control__button--top-right')) {
+    leftRacketTop = true;
+  }
+
+  if (evt.target.classList.contains('control__button--top-right-up')) {
+    downRacketTop = true;
+    leftRacketTop = true;
   }
 });
 
 document.addEventListener('touchend', (evt) => {
-  if (evt.target.classList.contains('control__button--up')) {
+  if (evt.target.classList.contains('control__button--bottom-up')) {
     upRacketBottom = false;
   }
 
-  if (evt.target.classList.contains('control__button--down')) {
+  if (evt.target.classList.contains('control__button--bottom-down')) {
     downRacketBottom = false;
   }
 
-  if (evt.target.classList.contains('control__button--left')) {
+  if (evt.target.classList.contains('control__button--bottom-left')) {
     leftRacketBottom = false;
   }
 
-  if (evt.target.classList.contains('control__button--left-up')) {
+  if (evt.target.classList.contains('control__button--bottom-left-up')) {
     upRacketBottom = false;
     leftRacketBottom = false;
   }
 
-  if (evt.target.classList.contains('control__button--right')) {
+  if (evt.target.classList.contains('control__button--bottom-right')) {
     rightRacketBottom = false;
   }
 
-  if (evt.target.classList.contains('control__button--right-up')) {
+  if (evt.target.classList.contains('control__button--bottom-right-up')) {
     upRacketBottom = false;
     rightRacketBottom = false;
+  }
+
+  if (evt.target.classList.contains('control__button--top-up')) {
+    downRacketTop = false;
+  }
+
+  if (evt.target.classList.contains('control__button--top-down')) {
+    upRacketTop = false;
+  }
+
+  if (evt.target.classList.contains('control__button--top-left')) {
+    rightRacketTop = false;
+  }
+
+  if (evt.target.classList.contains('control__button--top-left-up')) {
+    downRacketTop = false;
+    rightRacketTop = false;
+  }
+
+  if (evt.target.classList.contains('control__button--top-right')) {
+    leftRacketTop = false;
+  }
+
+  if (evt.target.classList.contains('control__button--top-right-up')) {
+    downRacketTop = false;
+    leftRacketTop = false;
   }
 });
+
