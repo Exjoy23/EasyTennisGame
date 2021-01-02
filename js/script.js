@@ -413,7 +413,17 @@ document.addEventListener('touchstart', (evt) => {
     leftRacketBottom = true;
   }
 
+  if (evt.target.classList.contains('control__button--left-up')) {
+    upRacketBottom = true;
+    leftRacketBottom = true;
+  }
+
   if (evt.target.classList.contains('control__button--right')) {
+    rightRacketBottom = true;
+  }
+
+  if (evt.target.classList.contains('control__button--right-up')) {
+    upRacketBottom = true;
     rightRacketBottom = true;
   }
 });
@@ -431,7 +441,17 @@ document.addEventListener('touchend', (evt) => {
     leftRacketBottom = false;
   }
 
+  if (evt.target.classList.contains('control__button--left-up')) {
+    upRacketBottom = false;
+    leftRacketBottom = false;
+  }
+
   if (evt.target.classList.contains('control__button--right')) {
+    rightRacketBottom = false;
+  }
+
+  if (evt.target.classList.contains('control__button--right-up')) {
+    upRacketBottom = false;
     rightRacketBottom = false;
   }
 });
