@@ -4,6 +4,8 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  width: 100vw;
+  height: 100vh;
   margin: 0;
 
   font-family: "Anton", sans-serif;
@@ -11,6 +13,8 @@
   background-color: rgb(173, 173, 173);
 
   -webkit-user-select: none;
+
+  touch-action: none;
 }
 
 .menu__wrapper {
@@ -19,6 +23,7 @@
   right: 0;
   bottom: 0;
   left: 0;
+  z-index: 2;
 
   display: flex;
   flex-direction: column;
@@ -32,12 +37,26 @@
 .canvas {
   display: block;
   box-sizing: border-box;
+  width: 100vw;
+  height: 100vh;
   margin: 0 auto;
   padding: 0;
 
   background-color: grey;
   background-image: url("../img/fieldGrid.svg");
   background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+.page__img {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  width: 100vw;
+  height: 100vh;
 }
 
 .button {
@@ -63,15 +82,18 @@
 
 .control__bottom {
   position: absolute;
-  bottom: 50%;
+  bottom: 0;
   left: 50%;
+  z-index: 2;
 
   display: flex;
   align-items: flex-end;
 
-  transform: translateX(-50%) translateY(300px);
+  transform: translateX(-50%);
 
   -webkit-user-select: none;
+
+  touch-action: none;
 }
 
 .control__inner {
@@ -80,10 +102,12 @@
 }
 
 .control__button {
-  width: 30px;
-  height: 30px;
-  margin: 20px;
+  width: 50px;
+  height: 50px;
+  margin: 25px;
 
   background-color: transparent;
   border: 3px solid lightgray;
+
+  touch-action: none;
 }
