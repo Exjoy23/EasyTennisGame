@@ -70,7 +70,7 @@
 
 .control__bottom {
   position: absolute;
-  bottom: 0;
+  bottom: 25px;
   left: 50%;
   z-index: 2;
 
@@ -86,7 +86,7 @@
 
 .control__top {
   position: absolute;
-  top: 0;
+  top: 25px;
   left: 50%;
   z-index: 2;
 
