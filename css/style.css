@@ -13,6 +13,10 @@
   user-select: none;
 }
 
+.menu {
+  user-select: none;
+}
+
 .menu__wrapper {
   position: absolute;
   top: 0;
@@ -76,11 +80,15 @@
   align-items: flex-end;
 
   transform: translateX(-50%) translateY(300px);
+
+  user-select: none;
 }
 
 .control__inner {
   display: flex;
   flex-direction: column;
+
+  user-select: none;
 }
 
 .control__button {
@@ -90,4 +98,6 @@
 
   background-color: transparent;
   border: 3px solid lightgray;
+
+  user-select: none;
 }
