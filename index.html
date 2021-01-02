@@ -14,11 +14,21 @@
 <body class="page__body">
   <section class="menu">
     <div class="menu__wrapper">
-      <button class="button button--play">Play</button>
+      <button class="button button--play" type="button">Play</button>
+      <button class="button button--hide button--replay" type="button">Play again</button>
     </div>
   </section>
-  <button class="button button--hide button--replay">Play again</button>
-  <canvas class="canvas" width="450" height="800"></canvas>
+  <section class="control">
+    <div class="control__bottom">
+      <button class="control__button control__button--left" type="button"></button>
+      <div class="control__inner">
+        <button class="control__button control__button--up" type="button"></button>
+        <button class="control__button control__button--down" type="button"></button>
+      </div>
+      <button class="control__button control__button--right" type="button"></button>
+    </div>
+  </section>
+  <canvas class="canvas" width="360" height="603"></canvas>
   <script src="js/script.js"></script>
 </body>
 

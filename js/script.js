@@ -2,8 +2,8 @@
 
 const canvas = document.querySelector('.canvas');
 const context = canvas.getContext('2d');
-const fieldWidth = 450;
-const fieldHeight = 800;
+const fieldWidth = 360;
+const fieldHeight = 603;
 
 const racketImgBottom = new Image();
 racketImgBottom.src = 'img/racketBottom.svg';
@@ -42,6 +42,7 @@ const ball = {
       this.x = 435;
       this.y = fieldHeight / 2;
       replayButton.classList.remove('button--hide');
+      menu.classList.remove('menu--hide');
     }
   },
 
@@ -337,14 +338,15 @@ function drawResult() {
   if (ball.timer === 0) {
     if (racketTop.score === racketBottom.score) {
       context.fillStyle = '#DA5858';
-      context.font = '60px Anton';
-      context.fillText('NOBODY WON', 75, 415);
+      context.font = '65px Anton';
+      context.fillText('NOBODY WON', 68, 120);
+      context.fillText('NOBODY WON', 68, 730);
     } else if (racketTop.score > racketBottom.score) {
-      context.fillStyle = 'rgba(255, 255, 255, 0.5)';
+      context.fillStyle = 'white';
       context.font = '65px Anton';
       context.fillText('THE WINNER', 80, 120);
     } else {
-      context.fillStyle = 'rgba(255, 255, 255, 0.5)';
+      context.fillStyle = 'white';
       context.font = '65px Anton';
       context.fillText('THE WINNER', 80, 730);
     }
@@ -374,23 +376,62 @@ ball.setTimer();
 
 const menu = document.querySelector('.menu');
 const playButton = menu.querySelector('.button--play');
-const replayButton = document.querySelector('.button--replay');
+const replayButton = menu.querySelector('.button--replay');
 
 playButton.addEventListener('click', () => {
   menu.classList.add('menu--hide');
-  ball.timer = 180;
+  playButton.classList.add('button--hide');
+  ball.timer = 120;
   render();
 });
 
 replayButton.addEventListener('click', () => {
   replayButton.classList.add('button--hide');
-  ball.timer = 180;
+  ball.timer = 120;
   ball.x = fieldWidth / 2;
   ball.y = fieldHeight / 2;
   ball.speedX = 0;
   ball.speedY = 12;
   racketTop.x = fieldWidth / 2 - 50;
   racketTop.y = fieldHeight / 2 - (fieldHeight / 2) + 50;
+  racketTop.score = 0;
   racketBottom.x = fieldWidth / 2 - 50;
   racketBottom.y = fieldHeight / 2 + (fieldHeight / 2) - 100;
+  racketBottom.score = 0;
+});
+
+document.addEventListener('touchstart', (evt) => {
+  if (evt.target.classList.contains('control__button--up')) {
+    upRacketBottom = true;
+  }
+
+  if (evt.target.classList.contains('control__button--down')) {
+    downRacketBottom = true;
+  }
+
+  if (evt.target.classList.contains('control__button--left')) {
+    leftRacketBottom = true;
+  }
+
+  if (evt.target.classList.contains('control__button--right')) {
+    rightRacketBottom = true;
+  }
+});
+
+document.addEventListener('touchend', (evt) => {
+  if (evt.target.classList.contains('control__button--up')) {
+    upRacketBottom = false;
+  }
+
+  if (evt.target.classList.contains('control__button--down')) {
+    downRacketBottom = false;
+  }
+
+  if (evt.target.classList.contains('control__button--left')) {
+    leftRacketBottom = false;
+  }
+
+  if (evt.target.classList.contains('control__button--right')) {
+    rightRacketBottom = false;
+  }
 });
