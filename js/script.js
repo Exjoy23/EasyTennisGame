@@ -25,7 +25,7 @@ const ball = {
   x: fieldWidth / 2,
   y: fieldHeight / 2,
   speedX: 0,
-  speedY: 12,
+  speedY: 8,
   timer: 0,
 
   setTimer() {
@@ -75,11 +75,11 @@ const ball = {
 
   setSpeedY() {
     switch (this.speedY) {
-      case 12:
-        this.speedY = 10;
+      case 8:
+        this.speedY = 6;
         break;
-      case -12:
-        this.speedY = -10;
+      case -8:
+        this.speedY = -6;
         break;
     }
   },
@@ -177,14 +177,14 @@ const ball = {
     if ((this.y - racketTop.height - racketTop.y <= 0 && this.y - racketTop.height - racketTop.y >= -30) &&
       this.x > racketTop.x && this.x < racketTop.x + racketTop.width) {
       this.checkCollisionWithRacket(racketTop);
-      this.speedY = 12;
+      this.speedY = 8;
       racketTopSound.play();
     }
 
     if ((this.y - racketBottom.y - racketBottom.height / 5 >= 0 && this.y - racketBottom.y - racketBottom.height / 5 <= 30) &&
       this.x > racketBottom.x && this.x < racketBottom.x + racketBottom.width) {
       this.checkCollisionWithRacket(racketBottom);
-      this.speedY = -12;
+      this.speedY = -8;
       racketBottomSound.play();
     }
   }
