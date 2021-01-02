@@ -10,7 +10,7 @@
 
   font-family: "Anton", sans-serif;
 
-  background-color: rgb(173, 173, 173);
+  background-color: grey;
 
   -webkit-user-select: none;
 
@@ -37,7 +37,6 @@
 .canvas {
   display: block;
   box-sizing: border-box;
-  /* width: 100%; */
   height: 100%;
   margin: 0 auto;
   padding: 0;
@@ -96,9 +95,50 @@
   box-sizing: border-box;
   width: 50px;
   height: 50px;
+  padding: 0;
 
   background-color: transparent;
-  border: 1px solid lightgray;
+  background-size: 100% 100%;
+  border: none;
 
   touch-action: none;
+}
+
+.control__button--up {
+  background-image: url("../img/arrow.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.control__button--down {
+  background-image: url("../img/arrow.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  transform: rotate(180deg);
+}
+
+.control__button--left {
+  background-image: url("../img/arrow.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  transform: rotate(-90deg);
+}
+
+.control__button--right {
+  background-image: url("../img/arrow.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  transform: rotate(90deg);
+}
+
+.control__button--left-up {
+  background-image: url("../img/arrow-left-up.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.control__button--right-up {
+  background-image: url("../img/arrow-right-up.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
 }
