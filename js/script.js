@@ -379,7 +379,6 @@ const playButton = menu.querySelector('.button--play');
 const replayButton = menu.querySelector('.button--replay');
 
 playButton.addEventListener('click', () => {
-  canvas.webkitRequestFullscreen();
   menu.classList.add('menu--hide');
   playButton.classList.add('button--hide');
   ball.timer = 120;
