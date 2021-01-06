@@ -14,9 +14,6 @@ racketImgTop.src = 'img/racketTop.svg';
 const racketTopSound = new Audio('audio/racketTopSound.mp3');
 const racketBottomSound = new Audio('audio/racketBottomSound.mp3');
 const ballSound = new Audio('audio/ballSound.mp3');
-racketTopSound.load();
-racketBottomSound.load();
-ballSound.load();
 
 const ball = {
   radius: 10,
@@ -376,14 +373,17 @@ const menu = document.querySelector('.menu');
 const playButton = menu.querySelector('.button--play');
 const replayButton = menu.querySelector('.button--replay');
 
-playButton.addEventListener('click', () => {
+playButton.addEventListener('touchstart', () => {
+  racketTopSound.load();
+  racketBottomSound.load();
+  ballSound.load();
   menu.classList.add('menu--hide');
   playButton.classList.add('button--hide');
   ball.timer = 120;
   render();
 });
 
-replayButton.addEventListener('click', () => {
+replayButton.addEventListener('touchstart', () => {
   replayButton.classList.add('button--hide');
   ball.timer = 120;
   ball.x = fieldWidth / 2;
