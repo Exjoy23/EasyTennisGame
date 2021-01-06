@@ -14,6 +14,9 @@ racketImgTop.src = 'img/racketTop.svg';
 const racketTopSound = new Audio('audio/racketTopSound.mp3');
 const racketBottomSound = new Audio('audio/racketBottomSound.mp3');
 const ballSound = new Audio('audio/ballSound.mp3');
+racketTopSound.load();
+racketBottomSound.load();
+ballSound.load();
 
 const ball = {
   radius: 10,
