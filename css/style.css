@@ -1,12 +1,20 @@
 .page__body {
   position: relative;
 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100vw;
   height: 100vh;
   margin: 0;
 
   font-family: "Anton", sans-serif;
 
-  background-color: lightgray;
+  background-color: grey;
+
+  -webkit-user-select: none;
+
+  touch-action: none;
 }
 
 .menu__wrapper {
@@ -15,31 +23,34 @@
   right: 0;
   bottom: 0;
   left: 0;
+  z-index: 2;
 
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  padding-top: 300px;
+}
 
-  background-color: rgba(255, 255, 255, 0.5);
+.menu--hide {
+  display: none;
 }
 
 .canvas {
   display: block;
   box-sizing: border-box;
-  width: 450px;
-  height: 800px;
+  height: 100%;
   margin: 0 auto;
   padding: 0;
 
   background-color: grey;
   background-image: url("../img/fieldGrid.svg");
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: 100% 100%;
 }
 
 .button {
   width: 300px;
   height: 50px;
+  margin: 0 auto;
 
   font-size: 30px;
   font-family: "Anton", sans-serif;
@@ -57,14 +68,145 @@
   display: none;
 }
 
-.button--replay {
+.control__bottom {
   position: absolute;
-  top: 50%;
+  bottom: 25px;
   left: 50%;
+  z-index: 2;
+
+  display: flex;
+  align-items: flex-end;
 
   transform: translateX(-50%);
+
+  -webkit-user-select: none;
+
+  touch-action: none;
 }
 
-.menu--hide {
-  display: none;
+.control__top {
+  position: absolute;
+  top: 25px;
+  left: 50%;
+  z-index: 2;
+
+  display: flex;
+  align-items: flex-end;
+
+  transform: translateX(-50%) rotate(180deg);
+
+  -webkit-user-select: none;
+
+  touch-action: none;
+}
+
+.control__inner {
+  display: flex;
+  flex-direction: column;
+
+  touch-action: none;
+}
+
+.control__button {
+  box-sizing: border-box;
+  width: 50px;
+  height: 50px;
+  padding: 0;
+
+  background-color: transparent;
+  background-size: 100% 100%;
+  border: none;
+
+  touch-action: none;
+}
+
+@media (min-width: 600px) {
+  .control__button {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .control {
+    display: none;
+  }
+}
+
+.control__button--bottom-up {
+  background-image: url("../img/arrow.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.control__button--bottom-down {
+  background-image: url("../img/arrow.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  transform: rotate(180deg);
+}
+
+.control__button--bottom-left {
+  background-image: url("../img/arrow.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  transform: rotate(-90deg);
+}
+
+.control__button--bottom-right {
+  background-image: url("../img/arrow.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  transform: rotate(90deg);
+}
+
+.control__button--bottom-left-up {
+  background-image: url("../img/arrow-left-up.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.control__button--bottom-right-up {
+  background-image: url("../img/arrow-right-up.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.control__button--top-up {
+  background-image: url("../img/arrow.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.control__button--top-down {
+  background-image: url("../img/arrow.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  transform: rotate(180deg);
+}
+
+.control__button--top-left {
+  background-image: url("../img/arrow.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  transform: rotate(-90deg);
+}
+
+.control__button--top-right {
+  background-image: url("../img/arrow.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  transform: rotate(90deg);
+}
+
+.control__button--top-left-up {
+  background-image: url("../img/arrow-left-up.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.control__button--top-right-up {
+  background-image: url("../img/arrow-right-up.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
 }

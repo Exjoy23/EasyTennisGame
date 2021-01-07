@@ -6,26 +6,17 @@ const fieldWidth = 450;
 const fieldHeight = 800;
 
 const racketImgBottom = new Image();
-racketImgBottom.src = 'img/racketBottom.svg';
-
 const racketImgTop = new Image();
+
+racketImgBottom.src = 'img/racketBottom.svg';
 racketImgTop.src = 'img/racketTop.svg';
-
-const racketTopSound = new Audio();
-racketTopSound.src = 'audio/racketTopSound.mp3';
-
-const racketBottomSound = new Audio();
-racketBottomSound.src = 'audio/racketBottomSound.mp3';
-
-const ballSound = new Audio();
-ballSound.src = 'audio/ballSound.mp3';
 
 const ball = {
   radius: 10,
   x: fieldWidth / 2,
   y: fieldHeight / 2,
   speedX: 0,
-  speedY: 12,
+  speedY: 8,
   timer: 0,
 
   setTimer() {
@@ -42,6 +33,7 @@ const ball = {
       this.x = 435;
       this.y = fieldHeight / 2;
       replayButton.classList.remove('button--hide');
+      menu.classList.remove('menu--hide');
     }
   },
 
@@ -74,11 +66,11 @@ const ball = {
 
   setSpeedY() {
     switch (this.speedY) {
-      case 12:
-        this.speedY = 10;
+      case 8:
+        this.speedY = 6;
         break;
-      case -12:
-        this.speedY = -10;
+      case -8:
+        this.speedY = -6;
         break;
     }
   },
@@ -128,7 +120,6 @@ const ball = {
 
   checkCollision(racketTop, racketBottom) {
     if (this.x > fieldWidth - this.radius || this.x < this.radius) {
-      ballSound.play();
       switch (this.speedX) {
         case 6:
           this.speedX = -4.5;
@@ -176,15 +167,13 @@ const ball = {
     if ((this.y - racketTop.height - racketTop.y <= 0 && this.y - racketTop.height - racketTop.y >= -30) &&
       this.x > racketTop.x && this.x < racketTop.x + racketTop.width) {
       this.checkCollisionWithRacket(racketTop);
-      this.speedY = 12;
-      racketTopSound.play();
+      this.speedY = 8;
     }
 
     if ((this.y - racketBottom.y - racketBottom.height / 5 >= 0 && this.y - racketBottom.y - racketBottom.height / 5 <= 30) &&
       this.x > racketBottom.x && this.x < racketBottom.x + racketBottom.width) {
       this.checkCollisionWithRacket(racketBottom);
-      this.speedY = -12;
-      racketBottomSound.play();
+      this.speedY = -8;
     }
   }
 };
@@ -337,14 +326,15 @@ function drawResult() {
   if (ball.timer === 0) {
     if (racketTop.score === racketBottom.score) {
       context.fillStyle = '#DA5858';
-      context.font = '60px Anton';
-      context.fillText('NOBODY WON', 75, 415);
+      context.font = '65px Anton';
+      context.fillText('NOBODY WON', 68, 120);
+      context.fillText('NOBODY WON', 68, 730);
     } else if (racketTop.score > racketBottom.score) {
-      context.fillStyle = 'rgba(255, 255, 255, 0.5)';
+      context.fillStyle = 'white';
       context.font = '65px Anton';
       context.fillText('THE WINNER', 80, 120);
     } else {
-      context.fillStyle = 'rgba(255, 255, 255, 0.5)';
+      context.fillStyle = 'white';
       context.font = '65px Anton';
       context.fillText('THE WINNER', 80, 730);
     }
@@ -374,23 +364,140 @@ ball.setTimer();
 
 const menu = document.querySelector('.menu');
 const playButton = menu.querySelector('.button--play');
-const replayButton = document.querySelector('.button--replay');
+const replayButton = menu.querySelector('.button--replay');
 
-playButton.addEventListener('click', () => {
+playButton.addEventListener('touchstart', play);
+playButton.addEventListener('click', play);
+replayButton.addEventListener('touchstart', replay);
+replayButton.addEventListener('click', replay);
+
+function play() {
   menu.classList.add('menu--hide');
-  ball.timer = 180;
+  playButton.classList.add('button--hide');
+  ball.timer = 120;
   render();
-});
+}
 
-replayButton.addEventListener('click', () => {
+function replay() {
   replayButton.classList.add('button--hide');
-  ball.timer = 180;
+  ball.timer = 120;
   ball.x = fieldWidth / 2;
   ball.y = fieldHeight / 2;
   ball.speedX = 0;
   ball.speedY = 12;
   racketTop.x = fieldWidth / 2 - 50;
   racketTop.y = fieldHeight / 2 - (fieldHeight / 2) + 50;
+  racketTop.score = 0;
   racketBottom.x = fieldWidth / 2 - 50;
   racketBottom.y = fieldHeight / 2 + (fieldHeight / 2) - 100;
+  racketBottom.score = 0;
+}
+
+document.addEventListener('touchstart', (evt) => {
+  if (evt.target.classList.contains('control__button--bottom-up')) {
+    upRacketBottom = true;
+  }
+
+  if (evt.target.classList.contains('control__button--bottom-down')) {
+    downRacketBottom = true;
+  }
+
+  if (evt.target.classList.contains('control__button--bottom-left')) {
+    leftRacketBottom = true;
+  }
+
+  if (evt.target.classList.contains('control__button--bottom-left-up')) {
+    upRacketBottom = true;
+    leftRacketBottom = true;
+  }
+
+  if (evt.target.classList.contains('control__button--bottom-right')) {
+    rightRacketBottom = true;
+  }
+
+  if (evt.target.classList.contains('control__button--bottom-right-up')) {
+    upRacketBottom = true;
+    rightRacketBottom = true;
+  }
+
+  if (evt.target.classList.contains('control__button--top-up')) {
+    downRacketTop = true;
+  }
+
+  if (evt.target.classList.contains('control__button--top-down')) {
+    upRacketTop = true;
+  }
+
+  if (evt.target.classList.contains('control__button--top-left')) {
+    rightRacketTop = true;
+  }
+
+  if (evt.target.classList.contains('control__button--top-left-up')) {
+    downRacketTop = true;
+    rightRacketTop = true;
+  }
+
+  if (evt.target.classList.contains('control__button--top-right')) {
+    leftRacketTop = true;
+  }
+
+  if (evt.target.classList.contains('control__button--top-right-up')) {
+    downRacketTop = true;
+    leftRacketTop = true;
+  }
 });
+
+document.addEventListener('touchend', (evt) => {
+  if (evt.target.classList.contains('control__button--bottom-up')) {
+    upRacketBottom = false;
+  }
+
+  if (evt.target.classList.contains('control__button--bottom-down')) {
+    downRacketBottom = false;
+  }
+
+  if (evt.target.classList.contains('control__button--bottom-left')) {
+    leftRacketBottom = false;
+  }
+
+  if (evt.target.classList.contains('control__button--bottom-left-up')) {
+    upRacketBottom = false;
+    leftRacketBottom = false;
+  }
+
+  if (evt.target.classList.contains('control__button--bottom-right')) {
+    rightRacketBottom = false;
+  }
+
+  if (evt.target.classList.contains('control__button--bottom-right-up')) {
+    upRacketBottom = false;
+    rightRacketBottom = false;
+  }
+
+  if (evt.target.classList.contains('control__button--top-up')) {
+    downRacketTop = false;
+  }
+
+  if (evt.target.classList.contains('control__button--top-down')) {
+    upRacketTop = false;
+  }
+
+  if (evt.target.classList.contains('control__button--top-left')) {
+    rightRacketTop = false;
+  }
+
+  if (evt.target.classList.contains('control__button--top-left-up')) {
+    downRacketTop = false;
+    rightRacketTop = false;
+  }
+
+  if (evt.target.classList.contains('control__button--top-right')) {
+    leftRacketTop = false;
+  }
+
+  if (evt.target.classList.contains('control__button--top-right-up')) {
+    downRacketTop = false;
+    leftRacketTop = false;
+  }
+});
+
