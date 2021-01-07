@@ -6,14 +6,10 @@ const fieldWidth = 450;
 const fieldHeight = 800;
 
 const racketImgBottom = new Image();
-racketImgBottom.src = 'img/racketBottom.svg';
-
 const racketImgTop = new Image();
-racketImgTop.src = 'img/racketTop.svg';
 
-const racketTopSound = new Audio('audio/racketTopSound.aac');
-const racketBottomSound = new Audio('audio/racketBottomSound.aac');
-const ballSound = new Audio('audio/ballSound.aac');
+racketImgBottom.src = 'img/racketBottom.svg';
+racketImgTop.src = 'img/racketTop.svg';
 
 const ball = {
   radius: 10,
@@ -124,7 +120,6 @@ const ball = {
 
   checkCollision(racketTop, racketBottom) {
     if (this.x > fieldWidth - this.radius || this.x < this.radius) {
-      ballSound.play();
       switch (this.speedX) {
         case 6:
           this.speedX = -4.5;
@@ -173,14 +168,12 @@ const ball = {
       this.x > racketTop.x && this.x < racketTop.x + racketTop.width) {
       this.checkCollisionWithRacket(racketTop);
       this.speedY = 8;
-      racketTopSound.play();
     }
 
     if ((this.y - racketBottom.y - racketBottom.height / 5 >= 0 && this.y - racketBottom.y - racketBottom.height / 5 <= 30) &&
       this.x > racketBottom.x && this.x < racketBottom.x + racketBottom.width) {
       this.checkCollisionWithRacket(racketBottom);
       this.speedY = -8;
-      racketBottomSound.play();
     }
   }
 };
@@ -373,17 +366,19 @@ const menu = document.querySelector('.menu');
 const playButton = menu.querySelector('.button--play');
 const replayButton = menu.querySelector('.button--replay');
 
-playButton.addEventListener('touchstart', () => {
-  racketTopSound.load();
-  racketBottomSound.load();
-  ballSound.load();
+playButton.addEventListener('touchstart', play);
+playButton.addEventListener('click', play);
+replayButton.addEventListener('touchstart', replay);
+replayButton.addEventListener('click', replay);
+
+function play() {
   menu.classList.add('menu--hide');
   playButton.classList.add('button--hide');
   ball.timer = 120;
   render();
-});
+}
 
-replayButton.addEventListener('touchstart', () => {
+function replay() {
   replayButton.classList.add('button--hide');
   ball.timer = 120;
   ball.x = fieldWidth / 2;
@@ -396,7 +391,7 @@ replayButton.addEventListener('touchstart', () => {
   racketBottom.x = fieldWidth / 2 - 50;
   racketBottom.y = fieldHeight / 2 + (fieldHeight / 2) - 100;
   racketBottom.score = 0;
-});
+}
 
 document.addEventListener('touchstart', (evt) => {
   if (evt.target.classList.contains('control__button--bottom-up')) {
